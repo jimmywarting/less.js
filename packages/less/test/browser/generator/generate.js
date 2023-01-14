@@ -1,6 +1,6 @@
 const template = require('./template')
 let config
-const fs = require('fs-extra')
+const fs = require('fs')
 const path = require('path')
 const globby = require('globby')
 const { runner } = require('mocha-headless-chrome')
@@ -17,8 +17,12 @@ if (process.argv[2]) {
 const tests = []
 const cwd = process.cwd()
 const tmpDir = path.join(cwd, 'tmp', 'browser')
-fs.ensureDirSync(tmpDir)
-fs.copySync(path.join(cwd, 'test', 'browser', 'common.js'), path.join(tmpDir, 'common.js'))
+fs.mkdirSync(tmpDir, { recursive: true })
+// Copy common.js to tmpDir
+fs.copyFileSync(
+  path.join(cwd, 'test', 'browser', 'common.js'),
+  path.join(tmpDir, 'common.js')
+)
 
 let numTests = 0
 let passedTests = 0
@@ -30,7 +34,7 @@ function runSerial (tasks) {
   start = Date.now()
   tasks.forEach(task => {
     result = result.then(result => {
-      if (result && result.result && result.result.stats) {
+      if (result?.result?.stats) {
         const stats = result.result.stats
         numTests += stats.tests
         passedTests += stats.passes
