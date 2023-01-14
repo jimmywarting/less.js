@@ -1,21 +1,21 @@
-import Node from './node.js';
+import Node from './node.js'
 
-const Paren = function(node) {
-    this.value = node;
-};
+const Paren = function (node) {
+  this.value = node
+}
 
 Paren.prototype = Object.assign(new Node(), {
-    type: 'Paren',
+  type: 'Paren',
 
-    genCSS(context, output) {
-        output.add('(');
-        this.value.genCSS(context, output);
-        output.add(')');
-    },
+  genCSS (context, output) {
+    output.add('(')
+    this.value.genCSS(context, output)
+    output.add(')')
+  },
 
-    eval(context) {
-        return new Paren(this.value.eval(context));
-    }
-});
+  eval (context) {
+    return new Paren(this.value.eval(context))
+  }
+})
 
-export default Paren;
+export default Paren

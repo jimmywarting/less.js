@@ -1,29 +1,29 @@
-import Node from './node.js';
-import contexts from '../contexts.js';
-import * as utils from '../utils.js';
+import Node from './node.js'
+import contexts from '../contexts.js'
+import * as utils from '../utils.js'
 
-const DetachedRuleset = function(ruleset, frames) {
-    this.ruleset = ruleset;
-    this.frames = frames;
-    this.setParent(this.ruleset, this);
-};
+const DetachedRuleset = function (ruleset, frames) {
+  this.ruleset = ruleset
+  this.frames = frames
+  this.setParent(this.ruleset, this)
+}
 
 DetachedRuleset.prototype = Object.assign(new Node(), {
-    type: 'DetachedRuleset',
-    evalFirst: true,
+  type: 'DetachedRuleset',
+  evalFirst: true,
 
-    accept(visitor) {
-        this.ruleset = visitor.visit(this.ruleset);
-    },
+  accept (visitor) {
+    this.ruleset = visitor.visit(this.ruleset)
+  },
 
-    eval(context) {
-        const frames = this.frames || utils.copyArray(context.frames);
-        return new DetachedRuleset(this.ruleset, frames);
-    },
+  eval (context) {
+    const frames = this.frames || utils.copyArray(context.frames)
+    return new DetachedRuleset(this.ruleset, frames)
+  },
 
-    callEval(context) {
-        return this.ruleset.eval(this.frames ? new contexts.Eval(context, this.frames.concat(context.frames)) : context);
-    }
-});
+  callEval (context) {
+    return this.ruleset.eval(this.frames ? new contexts.Eval(context, this.frames.concat(context.frames)) : context)
+  }
+})
 
-export default DetachedRuleset;
+export default DetachedRuleset

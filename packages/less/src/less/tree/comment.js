@@ -1,28 +1,28 @@
-import Node from './node.js';
-import getDebugInfo from './debug-info.js';
+import Node from './node.js'
+import getDebugInfo from './debug-info.js'
 
-const Comment = function(value, isLineComment, index, currentFileInfo) {
-    this.value = value;
-    this.isLineComment = isLineComment;
-    this._index = index;
-    this._fileInfo = currentFileInfo;
-    this.allowRoot = true;
+const Comment = function (value, isLineComment, index, currentFileInfo) {
+  this.value = value
+  this.isLineComment = isLineComment
+  this._index = index
+  this._fileInfo = currentFileInfo
+  this.allowRoot = true
 }
 
 Comment.prototype = Object.assign(new Node(), {
-    type: 'Comment',
+  type: 'Comment',
 
-    genCSS(context, output) {
-        if (this.debugInfo) {
-            output.add(getDebugInfo(context, this), this.fileInfo(), this.getIndex());
-        }
-        output.add(this.value);
-    },
-
-    isSilent(context) {
-        const isCompressed = context.compress && this.value[2] !== '!';
-        return this.isLineComment || isCompressed;
+  genCSS (context, output) {
+    if (this.debugInfo) {
+      output.add(getDebugInfo(context, this), this.fileInfo(), this.getIndex())
     }
-});
+    output.add(this.value)
+  },
 
-export default Comment;
+  isSilent (context) {
+    const isCompressed = context.compress && this.value[2] !== '!'
+    return this.isLineComment || isCompressed
+  }
+})
+
+export default Comment

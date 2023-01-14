@@ -4,10 +4,10 @@ const html = require('html-template-tag')
  * Generates HTML templates from list of test sheets
  */
 module.exports = (stylesheets, helpers, spec, less) => {
-    if (!Array.isArray(helpers)) {
-        helpers = [helpers]
-    }
-    return html`
+  if (!Array.isArray(helpers)) {
+    helpers = [helpers]
+  }
+  return html`
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,16 +16,17 @@ module.exports = (stylesheets, helpers, spec, less) => {
     <title>Less.js Spec Runner</title>
 
     <!-- for each test, generate CSS/LESS link tags -->
-    $${stylesheets.map(function(fullLessName) {
-        var pathParts = fullLessName.split('/');
-        var fullCssName = fullLessName.replace(/\/less\//g, '/css/').replace(/less$/, 'css')
-        var lessName = pathParts[pathParts.length - 1];
-        var name = lessName.split('.')[0];
+    $${stylesheets.map(function (fullLessName) {
+        const pathParts = fullLessName.split('/')
+        const fullCssName = fullLessName.replace(/\/less\//g, '/css/').replace(/less$/, 'css')
+        const lessName = pathParts[pathParts.length - 1]
+        const name = lessName.split('.')[0]
         return `
     <!-- the tags to be generated -->
     <link id="original-less:test-less-${name}" title="test-less-${name}" rel="stylesheet/less" type="text/css" href="../../${fullLessName}">
     <link id="expected-less:test-less-${name}" rel="stylesheet" type="text/css" href="../../${fullCssName}">
-    ` }).join('')}
+    `
+}).join('')}
 
     $${helpers.map(helper => `
         <script src="../../${helper}"></script>
