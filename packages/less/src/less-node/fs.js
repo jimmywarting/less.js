@@ -1,7 +1,2 @@
-let fs
-try {
-  fs = require('graceful-fs')
-} catch (e) {
-  fs = require('fs')
-}
+import fs from 'fs'
 export default fs

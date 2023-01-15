@@ -1,16 +1,14 @@
+const path = require('path')
 const rollup = require('rollup')
 const typescript = require('rollup-plugin-typescript2')
 const commonjs = require('@rollup/plugin-commonjs')
 const json = require('@rollup/plugin-json')
 const resolve = require('@rollup/plugin-node-resolve').nodeResolve
 const terser = require('rollup-plugin-terser').terser
-const banner = require('./banner')
-const path = require('path')
 
 const rootPath = path.join(__dirname, '..')
 
 const args = require('minimist')(process.argv.slice(2))
-
 const outDir = args.dist ? './dist' : './tmp'
 
 async function buildBrowser () {
@@ -46,12 +44,7 @@ async function buildBrowser () {
         compress: true,
         include: [/^.+\.min\.js$/],
         output: {
-          comments: function (node, comment) {
-            if (comment.type == 'comment2') {
-              // preserve banner
-              return /@license/i.test(comment.value)
-            }
-          }
+          comments: () => false
         }
       })
     ]
@@ -63,8 +56,7 @@ async function buildBrowser () {
     await bundle.write({
       file: path.join(rootPath, file),
       format: 'umd',
-      name: 'less',
-      banner
+      name: 'less'
     })
   }
 
@@ -75,8 +67,7 @@ async function buildBrowser () {
       file: path.join(rootPath, file),
       format: 'umd',
       name: 'less',
-      sourcemap: true,
-      banner
+      sourcemap: true
     })
   }
 }

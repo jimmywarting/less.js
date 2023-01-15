@@ -1,6 +1,7 @@
 const path = require('path')
 const fs = require('fs')
-const now = require('performance-now')
+
+const { now } = performance
 
 const less = require('../.')
 let file = path.join(__dirname, 'benchmark.less')

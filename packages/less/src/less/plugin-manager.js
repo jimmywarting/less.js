@@ -15,9 +15,9 @@ class PluginManager {
   }
 
   /**
-     * Adds all the plugins in the array
-     * @param {Array} plugins
-     */
+   * Adds all the plugins in the array
+   * @param {Array} plugins
+   */
   addPlugins (plugins) {
     if (plugins) {
       for (let i = 0; i < plugins.length; i++) {
@@ -27,10 +27,10 @@ class PluginManager {
   }
 
   /**
-     *
-     * @param plugin
-     * @param {String} filename
-     */
+   *
+   * @param plugin
+   * @param {String} filename
+   */
   addPlugin (plugin, filename, functionRegistry) {
     this.installedPlugins.push(plugin)
     if (filename) {
@@ -42,27 +42,26 @@ class PluginManager {
   }
 
   /**
-     *
-     * @param filename
-     */
+   * @param filename
+   */
   get (filename) {
     return this.pluginCache[filename]
   }
 
   /**
-     * Adds a visitor. The visitor object has options on itself to determine
-     * when it should run.
-     * @param visitor
-     */
+   * Adds a visitor. The visitor object has options on itself to determine
+   * when it should run.
+   * @param visitor
+   */
   addVisitor (visitor) {
     this.visitors.push(visitor)
   }
 
   /**
-     * Adds a pre processor object
-     * @param {object} preProcessor
-     * @param {number} priority - guidelines 1 = before import, 1000 = import, 2000 = after import
-     */
+   * Adds a pre processor object
+   * @param {object} preProcessor
+   * @param {number} priority - guidelines 1 = before import, 1000 = import, 2000 = after import
+   */
   addPreProcessor (preProcessor, priority) {
     let indexToInsertAt
     for (indexToInsertAt = 0; indexToInsertAt < this.preProcessors.length; indexToInsertAt++) {
@@ -74,10 +73,10 @@ class PluginManager {
   }
 
   /**
-     * Adds a post processor object
-     * @param {object} postProcessor
-     * @param {number} priority - guidelines 1 = before compression, 1000 = compression, 2000 = after compression
-     */
+   * Adds a post processor object
+   * @param {object} postProcessor
+   * @param {number} priority - guidelines 1 = before compression, 1000 = compression, 2000 = after compression
+   */
   addPostProcessor (postProcessor, priority) {
     let indexToInsertAt
     for (indexToInsertAt = 0; indexToInsertAt < this.postProcessors.length; indexToInsertAt++) {
@@ -89,18 +88,16 @@ class PluginManager {
   }
 
   /**
-     *
-     * @param manager
-     */
+   * @param manager
+   */
   addFileManager (manager) {
     this.fileManagers.push(manager)
   }
 
   /**
-     *
-     * @returns {Array}
-     * @private
-     */
+   * @returns {Array}
+   * @private
+   */
   getPreProcessors () {
     const preProcessors = []
     for (let i = 0; i < this.preProcessors.length; i++) {
@@ -110,10 +107,10 @@ class PluginManager {
   }
 
   /**
-     *
-     * @returns {Array}
-     * @private
-     */
+   *
+   * @returns {Array}
+   * @private
+   */
   getPostProcessors () {
     const postProcessors = []
     for (let i = 0; i < this.postProcessors.length; i++) {
@@ -123,10 +120,10 @@ class PluginManager {
   }
 
   /**
-     *
-     * @returns {Array}
-     * @private
-     */
+   *
+   * @returns {Array}
+   * @private
+   */
   getVisitors () {
     return this.visitors
   }
@@ -146,10 +143,10 @@ class PluginManager {
   }
 
   /**
-     *
-     * @returns {Array}
-     * @private
-     */
+   *
+   * @returns {Array}
+   * @private
+   */
   getFileManagers () {
     return this.fileManagers
   }
